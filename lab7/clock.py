@@ -1,14 +1,5 @@
 import pygame  
-import math  
 import time  
-
-
-def rotate(imag,angle):
-    rotated_image = pygame.transform.rotate(imag, angle) #rotate уже принимает угол и с обратном направлени
-    rect = rotated_image.get_rect(center=CENTER) # после поворота центр смещается чтобы норм было надо центр обозначить
-    screen.blit(rotated_image, rect.topleft) # topleft левый верхий угол
-    
-
 
 
 # Инициализация Pygame  
@@ -16,13 +7,13 @@ pygame.init()
 
 # Установка размеров окна  
 WIDTH, HEIGHT = 800, 600  
-screen = pygame.display.set_mode((WIDTH, HEIGHT))  
+im = pygame.display.set_mode((WIDTH, HEIGHT))  
 pygame.display.set_caption("Мики")  
 
 # Загрузка фонового изображения
-background = pygame.image.load("clock.png")  
-sec_line = pygame.image.load("leftarm.png")
-min_line = pygame.image.load("leftarm.png")
+background = pygame.image.load("lab7/clock.png")  
+sec_line = pygame.image.load("lab7/leftarm.png")
+min_line = pygame.image.load("lab7/leftarm.png")
 background = pygame.transform.scale(background, (WIDTH, HEIGHT))  
 
 # размеры стрелки
@@ -31,12 +22,20 @@ sec_line = pygame.transform.scale(sec_line, (60,700))
 
 #центр  
 
-CENTER = (WIDTH // 2, HEIGHT // 2)  
+CENTER = (WIDTH / 2, HEIGHT / 2)  
+
+
+def rotate(imag,angle):
+    rotated_image = pygame.transform.rotate(imag, angle) #rotate уже принимает угол и с обратном направлени
+    rect = rotated_image.get_rect(center=CENTER) # после поворота центр смещается чтобы норм было надо центр обозначить
+    im.blit(rotated_image, rect.topleft) # topleft левый верхий угол
+    
+
 
 # Основной цикл часов  
 running = True  
 while running:  
-    screen.blit(background,(0,0))  # Отображаем фон  
+    im.blit(background,(0,0))  # Отображаем фон  
     time_now = time.localtime()
     minut =  time_now.tm_min
     seconds = time_now.tm_sec
@@ -49,7 +48,7 @@ while running:
 
 
     # Обновляем экран  
-    pygame.display.flip()  
+    pygame.display.update()  
     
     #проверка если закрыта то стоп 
     for event in pygame.event.get():  
