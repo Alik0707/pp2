@@ -41,7 +41,7 @@ while running:
     seconds = time_now.tm_sec
     
     sec_angle = -(seconds * 6 )
-    min_angle = -(minut * 6 )
+    min_angle = -(minut * 6 + seconds * 0.1) 
 
     rotate(sec_line,sec_angle)
     rotate(min_line,min_angle)

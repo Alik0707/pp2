@@ -21,7 +21,7 @@ pygame.mixer.init()
 
 
 #ссылки на музыку
-mus_fl_path = "/Users/user/Desktop/pp2/repositories/lab7/mus"
+mus_fl_path = "/home/zhanybekov-alikhan/Рабочий стол/pp2/lab7/mus"
 for_txt = os.listdir(mus_fl_path)
 list_of_mus = os.listdir(mus_fl_path)
 for i in range(len(list_of_mus)):
@@ -39,7 +39,7 @@ index = 0
 WIDTH, HEIGHT = 600,800  
 im = pygame.display.set_mode((WIDTH, HEIGHT))  
 pygame.display.set_caption("pl")
-background = pygame.image.load("/Users/user/Desktop/pp2/repositories/lab7/" + "background.jpg")
+background = pygame.image.load("/home/zhanybekov-alikhan/Рабочий стол/pp2/lab7/" + "background.jpg")
 background = pygame.transform.scale(background,(WIDTH,HEIGHT))
 
 
@@ -48,13 +48,13 @@ fon = pygame.Surface((300, 200))
 fon.fill((255, 255, 255)) 
 
 #buttoms
-next = pygame.image.load("/Users/user/Desktop/pp2/repositories/lab7/" + "next.png")
+next = pygame.image.load("/home/zhanybekov-alikhan/Рабочий стол/pp2/lab7/" + "next.png")
 next = pygame.transform.scale(next,(100,100))
-back = pygame.image.load("/Users/user/Desktop/pp2/repositories/lab7/" + "back.png")
+back = pygame.image.load("/home/zhanybekov-alikhan/Рабочий стол/pp2/lab7/" + "back.png")
 back = pygame.transform.scale(back,(100,100))
-plae = pygame.image.load("/Users/user/Desktop/pp2/repositories/lab7/" + "play.png")
+plae = pygame.image.load("/home/zhanybekov-alikhan/Рабочий стол/pp2/lab7/" + "play.png")
 plae = pygame.transform.scale(plae,(100,100))
-pause = pygame.image.load("/Users/user/Desktop/pp2/repositories/lab7/" + "pause.png")
+pause = pygame.image.load("/home/zhanybekov-alikhan/Рабочий стол/pp2/lab7/" + "pause.png")
 pause = pygame.transform.scale(pause,(115,113))
 
 
