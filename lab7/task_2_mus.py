@@ -9,10 +9,7 @@ def name_mus(index):
     font = pygame.font.Font(None,22) #создание шрифта
     text = font.render(for_txt[index],True,(0,0,0))#высвечивается трек
     return text
-def name_mus_long(index):
-    font = pygame.font.Font(None,18) #создание шрифта
-    text = font.render(for_txt[index],True,(0,0,0))#высвечивается трек
-    return text
+
 
 
 pygame.init()
