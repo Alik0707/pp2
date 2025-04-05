@@ -193,7 +193,7 @@ while True:
         rect_ready = False
 
     if circle_ready: # после отпускания дает сигнал надо рисовать 
-        radius = int(math.hypot(end_x - start_x, end_y - start_y) / 2)
+        radius = int(math.hypot(end_x - start_x, end_y - start_y) / 2)#radius 
         center_x = (start_x + end_x) /2
         center_y = (start_y + end_y) /2
         pygame.draw.circle(screen, brush_color, (center_x, center_y), radius)
@@ -212,27 +212,24 @@ while True:
         square_ready = False
 
     if right_triangle_ready:
-        points = [(start_x, start_y), (start_x, end_y), (end_x, end_y)]
+        points = [(start_x, start_y), (start_x, end_y), (end_x, end_y)]#
         pygame.draw.polygon(screen, brush_color, points)
         right_triangle_ready = False
 
     if equilateral_triangle_ready:
-        side = abs(end_x - start_x)
-        height_triangle = int(math.sqrt(3) / 2 * side)
-        x1 = start_x
-        y1 = end_y
-        x2 = start_x + side
-        y2 = end_y
-        x3 = start_x + side / 2
-        y3 = end_y - height_triangle
+        side = abs(end_x - start_x)#сторона
+        height_triangle = int(math.sqrt(3) / 2 * side)#высота
+        x1,y1 = min(start_x,end_x), max(end_y,start_y)#левая точка
+        x2,y2= max(start_x,end_x),max(end_y,start_y)#правая точка 
+        x3,y3= x1 + side / 2,end_y - height_triangle#ввверх
         pygame.draw.polygon(screen, brush_color, [(x1, y1), (x2, y2), (x3, y3)])
         equilateral_triangle_ready = False
 
     if rhombus_ready:
         center_x = (start_x + end_x) // 2
         center_y = (start_y + end_y) // 2
-        dx = abs(end_x - start_x) // 2
-        dy = abs(end_y - start_y) // 2
+        dx = abs(end_x - start_x) // 2#height x
+        dy = abs(end_y - start_y) // 2#высота по y 
         points = [
             (center_x, center_y - dy),
             (center_x + dx, center_y),
