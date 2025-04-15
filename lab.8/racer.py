@@ -133,7 +133,7 @@ all_sprites.add(P1)
 all_sprites.add(E1)
 all_sprites.add(C1)
 
-# Adding a new User event то есть добавляем новое событие 
+# Adding a new User event то есть добавляем новое событие которое увеличевает скорость каждую секунду
 INC_SPEED = pygame.USEREVENT + 1
 pygame.time.set_timer(INC_SPEED, 1000)
 
