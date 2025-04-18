@@ -25,6 +25,7 @@ row = cur.fetchone()
 
 if row:
     score = int(row[0])
+    speed = 10
     level = (score // 10) + 1
     print(f"Добро пожаловать обратно, {player_name}! Твой текущий счёт: {score}, уровень: {level}\n\n")
     input("write enter for start")

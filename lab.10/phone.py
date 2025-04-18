@@ -11,7 +11,7 @@ cur.execute("""CREATE TABLE IF NOT EXISTS phonebook (
       user_id SERIAL PRIMARY KEY,
       name VARCHAR(255) NOT NULL,
       surname VARCHAR(255) NOT NULL, 
-      phone VARCHAR(255) NOT NULL
+      phone VARCHAR(255) NOT NULL UNIQUE
 
 )
 """)
@@ -39,12 +39,20 @@ while flag:
         #csv
         if act == "1":
             filepath = input("Enter a file path with proper extension: ")
-            with open(str(filepath), 'r') as f:
-                reader = csv.reader(f)
-                next(reader)
-                for row in reader:
-                    cur.execute("INSERT INTO phonebook (name, surname, phone) VALUES (%s, %s, %s)", (row[0], row[1], row[2]))
-            conn.commit()
+
+            with open(filepath, 'r') as f:
+                reader = list(csv.reader(f))
+                print("\nДанные из CSV файла:")
+                for i, row in enumerate(reader[1:], start=1):
+                    print(f"{i}: {row}")
+
+                row_num = int(input("Введите номер строки, которую хотите добавить: "))
+                row = reader[row_num]
+
+                cur.execute("INSERT INTO phonebook (name, surname, phone) VALUES (%s, %s, %s)", 
+                            (row[0], row[1], row[2]))
+                conn.commit()
+
             input("\n\nНажмите Enter, чтобы вернуться в меню...")
         #yourself
         if act == "2":
@@ -62,7 +70,7 @@ while flag:
         if act == "name":
             name_var = str(input("Enter name that you want to change: "))
             name_upd = str(input("Enter the new name: "))
-            cur.execute("UPDATE phonebook SET name = %s WHERE name = %s", (name_upd, name_var))
+            cur.execute("UPDATE phonebook SET name = %s WHERE name = %s", (name_upd, name_var,))
             conn.commit()
             input("\n\nНажмите Enter, чтобы вернуться в меню...")
        
@@ -70,7 +78,7 @@ while flag:
         if act == "surname":
             surname_var = str(input("Enter surname that you want to change: "))
             surname_upd = str(input("Enter the new surname: "))
-            cur.execute("UPDATE phonebook SET surname = %s WHERE surname = %s", (surname_upd, surname_var))
+            cur.execute("UPDATE phonebook SET surname = %s WHERE surname = %s", (surname_upd, surname_var,))
             conn.commit()
             input("\n\nНажмите Enter, чтобы вернуться в меню...")
            
@@ -78,7 +86,7 @@ while flag:
         if act == "phone":
             phone_var = str(input("Enter phone number that you want to change: "))
             phone_upd = str(input("Enter the new phone number: "))
-            cur.execute("UPDATE phonebook SET phone = %s WHERE phone = %s", (phone_upd, name_var))
+            cur.execute("UPDATE phonebook SET phone = %s WHERE phone = %s", (phone_upd, phone_var,))
             conn.commit()
             input("\n\nНажмите Enter, чтобы вернуться в меню...")
       
@@ -97,7 +105,7 @@ while flag:
         
         if act == "2":
             name = str(input("Type name of the user: "))
-            cur.execute("SELECT * FROM phonebook WHERE name = %s", (name ))
+            cur.execute("SELECT * FROM phonebook WHERE name = %s", (name,))
             rows = cur.fetchall()
             print(tabulate(rows, headers=["ID", "Name", "Surname", "Phone"]))
             input("\n\nНажмите Enter, чтобы вернуться в меню...")
@@ -105,7 +113,7 @@ while flag:
         
         if act == "3":
             surname = str(input("Type surname of the user: "))
-            cur.execute("SELECT * FROM phonebook WHERE surname = %s", (surname ))
+            cur.execute("SELECT * FROM phonebook WHERE surname = %s", (surname,))
             rows = cur.fetchall()
             print(tabulate(rows, headers=["ID", "Name", "Surname", "Phone"]))
             input("\n\nНажмите Enter, чтобы вернуться в меню...")
@@ -113,15 +121,15 @@ while flag:
            
         if act == "4":
             phone = str(input("Type phone number of the user: "))
-            cur.execute("SELECT * FROM phonebook WHERE phone = %s", (phone ))
+            cur.execute("SELECT * FROM phonebook WHERE phone = %s", (phone,))
             rows = cur.fetchall()
             print(tabulate(rows, headers=["ID", "Name", "Surname", "Phone"]))
             input("\n\nНажмите Enter, чтобы вернуться в меню...")
 
     #delete
     if com == "4":
-        phone_var = str(input('Type phone number which you want to delete: '))
-        cur.execute("DELETE FROM phonebook WHERE phone = %s", (phone_var,))
+        user_name = str(input('Type user_name which you want to delete: '))
+        cur.execute("DELETE FROM phonebook WHERE name = %s", (user_name,))
         conn.commit()
         input("\n\nНажмите Enter, чтобы вернуться в меню...")    
     
