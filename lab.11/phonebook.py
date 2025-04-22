@@ -28,6 +28,7 @@ while flag:
     "3"- to make specidific QUERY in the table.
     "4"- to DELETE data from the table.
     "5"- to see the values in the table.
+    "6"- to see with limit
     "0"- to close the program.      
     """)
     com = str(input())
@@ -59,8 +60,8 @@ while flag:
             name_var = str(input("Name: "))
             surname_var = str(input("Surname: "))
             phone_var = str(input("Phone: "))
-            cur.execute("INSERT INTO phonebook (name, surname, phone) VALUES (%s, %s, %s)", (name_var, surname_var, phone_var))
-            conn.commit()
+            cur.execute("call insert_or_update_user(%s,%s,%s)",(name_var,surname_var,phone_var))
+           
             input("\n\nНажмите Enter, чтобы вернуться в меню...")
         
 
@@ -92,53 +93,71 @@ while flag:
       
       
                 
-    #query
+    #query with help function query
     if com == "3":    
         act = str(input("choose column : \nid -- '1' \nname -- '2' \nsurname -- '3' \nphone -- '4' \n"))
         if act == "1":
             id_var = str(input("Type id of the user: "))
-            cur.execute("SELECT * FROM phonebook WHERE user_id = %s", (id_var, ))
+            cur.execute("SELECT * from query(%s,%s)", (act,id_var))
             rows = cur.fetchall()
-            print(tabulate(rows, headers=["ID", "Name", "Surname", "Phone"]))
+            print(tabulate(rows, headers=["ID", "Name", "Surname", "Phone"],tablefmt='fancy_grid'))
             input("\n\nНажмите Enter, чтобы вернуться в меню...")
 
         
         if act == "2":
             name = str(input("Type name of the user: "))
-            cur.execute("SELECT * FROM phonebook WHERE name = %s", (name,))
+            cur.execute("SELECT * from query(%s,%s)", (act,name))
             rows = cur.fetchall()
-            print(tabulate(rows, headers=["ID", "Name", "Surname", "Phone"]))
+            print(tabulate(rows, headers=["ID", "Name", "Surname", "Phone"],tablefmt='fancy_grid'))
             input("\n\nНажмите Enter, чтобы вернуться в меню...")
 
         
         if act == "3":
             surname = str(input("Type surname of the user: "))
-            cur.execute("SELECT * FROM phonebook WHERE surname = %s", (surname,))
+            cur.execute("SELECT * from query(%s,%s)", (act,surname))
             rows = cur.fetchall()
-            print(tabulate(rows, headers=["ID", "Name", "Surname", "Phone"]))
+            print(tabulate(rows, headers=["ID", "Name", "Surname", "Phone"],tablefmt='fancy_grid'))
             input("\n\nНажмите Enter, чтобы вернуться в меню...")
+
 
            
         if act == "4":
             phone = str(input("Type phone number of the user: "))
-            cur.execute("SELECT * FROM phonebook WHERE phone = %s", (phone,))
+            cur.execute("SELECT * from query(%s,%s)", (act,phone))
             rows = cur.fetchall()
-            print(tabulate(rows, headers=["ID", "Name", "Surname", "Phone"]))
+            print(tabulate(rows, headers=["ID", "Name", "Surname", "Phone"],tablefmt='fancy_grid'))
             input("\n\nНажмите Enter, чтобы вернуться в меню...")
+
 
     #delete
     if com == "4":
-        user_name = str(input('Type user_name which you want to delete: '))
-        cur.execute("DELETE FROM phonebook WHERE name = %s", (user_name,))
-        conn.commit()
+        type_com = str(input("'1'-delete on name and  '2'- delete on phone\n"))
+        if type_com == "1":
+            user_name = str(input('Type user_name which you want to delete: '))
+            cur.execute("call del(%s,%s)", (type_com,user_name))
+        elif type_com == "2":
+            phone_var = str(input('Type phone which you want to delete: '))
+            cur.execute("call del(%s,%s)", (type_com,phone_var))
+
+        
         input("\n\nНажмите Enter, чтобы вернуться в меню...")    
     
     #display
     if com  == "5":
+        
         cur.execute("SELECT * from phonebook;")
         rows = cur.fetchall()
         print(tabulate(rows, headers=["ID", "Name", "Surname", "Phone"], tablefmt='fancy_grid'))
         input("\n\nНажмите Enter, чтобы вернуться в меню...")
+    #display with limit
+    if com == "6":
+        limit = int(input("limit of rows:"))
+        offset = int(input("с какого начать:"))
+        cur.execute("SELECT user_id, name, surname, phone from get_users(%s,%s);",(limit,offset))
+        rows = cur.fetchall()
+        print(tabulate(rows, headers=["ID", "Name", "Surname", "Phone"], tablefmt='fancy_grid'))
+        input("\n\nНажмите Enter, чтобы вернуться в меню...")
+
 
       
     #finish
